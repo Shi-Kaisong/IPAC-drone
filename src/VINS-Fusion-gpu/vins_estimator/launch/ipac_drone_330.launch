@@ -1,0 +1,4 @@
+<launch>
+    <node name="vins_estimator" pkg="vins" type="vins_node" output="screen" args="$(find vins)/../config/ipac_drone_330.yaml" />
+    <node name="loop_fusion" pkg="loop_fusion" type="loop_fusion_node" output="screen" args="$(find vins)/../config/ipac_drone_330.yaml" />
+</launch>
