@@ -1,0 +1,8 @@
+prefix=/home/best/Workspace/multirotor_ws/install
+
+Name: tfmini_ros
+Description: Description of tfmini_ros
+Version: 0.0.1
+Cflags: -I${prefix}/include
+Libs: -L${prefix}/lib 
+Requires: 

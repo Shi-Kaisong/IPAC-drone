@@ -1,0 +1,25 @@
+文件结构
+- command.txt   # 运行命令
+
+- src
+    - init_control  # 脚本通信
+
+    - my_control    # 无人机位置发送
+        - pose_control  # 位置控制+投放舵机控制 ***
+        - all_control   # 实验-位置控制
+        - init_control  # 实验-切换飞行模式为锁机状态
+        - offb_node     # 实验-投放舵机控制
+
+    - my_motion_planning    # 二维路径规划
+        - simple_navigation_goals   # 路径规划
+
+    - my_navigation # 导航（hector_slam）- 提供位置信息给无人机
+        - launch 文件夹
+    
+    - rplidar_ros-master    # 雷达通信包
+        - launch 文件夹
+
+    - tfmini_ros    # 单点雷达包
+        - launch 文件夹
+
+- mapping_xtdrone   # rviz可视化

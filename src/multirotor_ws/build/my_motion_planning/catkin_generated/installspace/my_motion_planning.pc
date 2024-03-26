@@ -1,0 +1,8 @@
+prefix=/home/best/Workspace/multirotor_ws/install
+
+Name: my_motion_planning
+Description: Description of my_motion_planning
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

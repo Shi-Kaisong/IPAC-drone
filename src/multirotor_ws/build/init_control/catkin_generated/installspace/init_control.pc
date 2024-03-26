@@ -1,0 +1,8 @@
+prefix=/home/best/Workspace/multirotor_ws/install
+
+Name: init_control
+Description: Description of init_control
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 
