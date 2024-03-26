@@ -16,7 +16,7 @@ wget http://fishros.com/install -O fishros && . fishros
 ### （二）MAVROS安装
 
 ```
-sudo apt-get install ros-noetic-mavros
+sudo apt-get install ros-noetic-mavros ros-noetic-mavros-extras
 cd /opt/ros/noetic/lib/mavros
 sudo ./install_geographiclib_datasets.sh
 ```
