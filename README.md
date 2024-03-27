@@ -60,7 +60,7 @@ sudo apt-get install ros-noetic-realsense2-description
 clone仓库
 
 ```
-git clone https://gitee.com/shi-kaisong/IPAC-drone.git
+git clone https://github.com/Shi-Kaisong/IPAC-drone.git
 ```
 
 ```
