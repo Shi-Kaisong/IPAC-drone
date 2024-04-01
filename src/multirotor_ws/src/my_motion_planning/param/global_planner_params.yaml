@@ -1,5 +1,0 @@
-GlobalPlanner:
-
-  use_dijkstra: True
-  use_grid_path: False
-  use_quadratic: True

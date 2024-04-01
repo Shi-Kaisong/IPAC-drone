@@ -1,2 +1,0 @@
-init_control:my_control:my_motion_planning:my_navigation:rplidar_ros-master:tfmini_ros
--DCATKIN_DEVEL_PREFIX=/home/best/Workspace/multirotor_ws/devel -DCMAKE_INSTALL_PREFIX=/home/best/Workspace/multirotor_ws/install -G Unix Makefiles

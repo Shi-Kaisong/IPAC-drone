@@ -1,8 +1,0 @@
-prefix=/home/best/Workspace/multirotor_ws/devel
-
-Name: tfmini_ros
-Description: Description of tfmini_ros
-Version: 0.0.1
-Cflags: -I/home/best/Workspace/multirotor_ws/src/tfmini_ros/include
-Libs: -L${prefix}/lib 
-Requires: 

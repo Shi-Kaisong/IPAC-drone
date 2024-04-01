@@ -1,12 +1,44 @@
 # IPAC—Drone 
 
 [toc]
+## 一、项目介绍
 
-### 软硬件环境介绍：
+## 二、软硬件环境介绍：
+### （一）无人机轴距
++ 本项目采用450轴距和330轴距，以下硬件选型将对两种轴距的无人机分别进行叙述。
+### （二）飞控选型
++ 本项目统一使用Pixhawk v6c飞控。
+### （三）动力系统
++ 450轴距
+  + 电机：A2212 980KV
+  + 电调：30A
+  + 螺旋桨：9450自锁螺旋桨
++ 330轴距
+  + 电机：X2212 2450KV
+  + 电调：30A
+  + 螺旋桨：6040三叶螺旋桨
+### （四）电源系统
++ 4S 5200mAh 35c
+### （五）GPS
++ 进口M8N/M9N
+### （六）遥控设备
++ 遥控器：乐迪AT10
++ 接收机：乐迪R12DSM
+### （七）数传
++ 3DR 915MHZ(500MW)
+### （八）机载电脑
++ jetson orin nx 16G
+### （九）相机
++ realsence D435i
++ usb摄像头
+### 软件介绍
++ 本项目ROS主从机均采用ubuntu 18.04系统，采用ros noetic版本；
++ 飞控固件采用PX4：1.13.2版本。
 
-本项目采用Pixhawk v6c飞控，jetson orin nx 16G作为机载电脑，该机载电脑搭配ubuntu20.04系统，采用的cuda是11.4版本，无人机的轴距是330mm。
+## 三、飞控设置
 
-## 一、机载电脑环境部署
+
+## 四、机载电脑环境部署
 
 ### （一）ROS安装
 推荐使用鱼香ROS的一键安装，安装命令如下：
@@ -55,14 +87,12 @@ sudo apt-get install ros-noetic-realsense2-description
 ```
 ### （四）clone仓库源码
 
-+ 仓库中包含ego-plenner源码，VISN-Fusion-gpu源码
-
 clone仓库
 
 ```
 git clone https://github.com/Shi-Kaisong/IPAC-drone.git
 ```
-
++ 将VINS中opencv3源码修改为opencv4
 ```
 sed -i 's/CV_FONT_HERSHEY_SIMPLEX/cv::FONT_HERSHEY_SIMPLEX/g' `grep CV_FONT_HERSHEY_SIMPLEX -rl ./`
 sed -i 's/CV_LOAD_IMAGE_GRAYSCALE/cv::IMREAD_GRAYSCALE/g' `grep CV_LOAD_IMAGE_GRAYSCALE -rl ./`
@@ -245,11 +275,19 @@ export ROS_IP=主机IP
 主机IP 主机hostname
 ```
 
+## 五、从机电脑环境部署
+
+### （一）clone仓库源码
+
+clone仓库
+
+```
+git clone https://github.com/Shi-Kaisong/IPAC-drone.git
+```
 
 
 
-
-## 二、参数修改
+## 六、参数修改
 
 ### （一）MAVROS
 
@@ -270,11 +308,14 @@ sudo vi px4.launch
 roscd realsense2_camera
 cd launch
 sudo vi rs_camere.launch
-## 将”enable_infra1"和"infra2"两个参数设置为"true"
+## 将"enable_infra1"和"enable_infra2"两个参数设置为"true"
 ```
 
 ### （三）修改D435i内参
-
+```
+cd VINS-Fusion-gpu/config/config
+```
+驱动realsense相机后，rostopic echo /camera/infra1/camera_info，把其中的K矩阵中的fx,fy,cx,cy填入left.yaml和right.yaml
 
 
 ### （四）Ego-Planner代码框架与参数介绍
@@ -311,15 +352,10 @@ sudo vi rs_camere.launch
   * `rostopic hz /mavros/imu/data_raw`，确认飞控传输的imu频率在200hz左右
 * 检查realsense驱动正常
   * `roslaunch realsense2_camera rs_camera.launch`
-  * 进入远程桌面，`rqt_image_view`
+  * 进入从机，`rviz`
   * 查看`/camera/infra1/image_rect_raw`,`/camera/infra2/image_rect_raw`,`/camera/depth/image_rect_raw`话题正常
 * VINS参数设置
-  * 进入`VINS_Fusion-gpu/config/`
-  
-  * 驱动realsense后，`rostopic echo /camera/infra1/camera_info`，把其中的K矩阵中的fx,fy,cx,cy填入`left.yaml`和`right.yaml`
-  
   * 在home目录创建`vins_output`文件夹
-  
   * 修改`ipac-drone-330.yaml`的`body_T_cam0`和`body_T_cam1`的`data`矩阵的第四列为你的无人机上的相机相对于飞控的实际外参，单位为米，顺序为x/y/z，第四项是1，不用改
 * VINS外参精确自标定
   * `sh shfiles/rspx4.sh`
@@ -330,5 +366,5 @@ sudo vi rs_camere.launch
 * 建图模块验证
   * `sh shfiles/rspx4.sh`
   * `roslaunch ego_planner single_run_in_exp.launch`
-  * 进入远程桌面 `roslaunch ego_planner rviz.launch`
+  * 进入从机桌面 `rviz -d ~/VINS-Fusion-gpu/config/vins_rviz_config.rviz`
 
