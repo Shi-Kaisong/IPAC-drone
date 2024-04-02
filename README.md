@@ -354,8 +354,12 @@ export ROS_IP=主机IP
 ```
 
 ## 六、从机电脑环境部署
-
-### （一）clone仓库源码
+### （一）ROS安装
+推荐使用鱼香ROS的一键安装，安装命令如下：
+```
+wget http://fishros.com/install -O fishros && . fishros
+```
+### （二）clone仓库源码
 
 + clone仓库
 
@@ -365,7 +369,7 @@ git clone https://github.com/Shi-Kaisong/IPAC-drone.git
 
 
 
-## 七、参数修改
+## 七、上位机参数修改
 
 ### （一）MAVROS
 
@@ -444,5 +448,5 @@ cd VINS-Fusion-gpu/config/config
 * 建图模块验证
   * `sh shfiles/rspx4.sh`
   * `roslaunch ego_planner single_run_in_exp.launch`
-  * 进入从机桌面 `rviz -d ~/catkin_ws/src/planner/plan_manage/launch/default.rviz`
+  * 进入从机桌面 `rviz -d ~/catkin_ws/rviz/default.rviz`
 
