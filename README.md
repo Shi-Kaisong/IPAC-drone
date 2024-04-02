@@ -45,7 +45,7 @@
 ## 三、无人机结构
 ### （一）电机安装
 
-
+![1](https://github.com/Shi-Kaisong/IPAC-drone/blob/main/image/%E7%94%B5%E6%9C%BA.png "电机方向")
 ## 四、飞控设置
 ### （一）固件
 + 请烧录版本为1.13.2的固件，实测1.13系列固件中，该版本固件在pixhawk v6c上工作最为稳定
