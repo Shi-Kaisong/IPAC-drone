@@ -2,6 +2,7 @@
 
 [toc]
 ## 一、项目介绍
+本项目是面向于四旋翼自主无人机快递运送项目。
 
 ## 二、软硬件环境介绍：
 ### （一）无人机轴距
@@ -145,7 +146,7 @@ sudo make install
 
 
 
-### （六）OpenCv4.6.0和cv_bridge安装（gpu)
+### （六）OpenCv4.6.0和cv_bridge安装（gpu）
 
 #### 1、opencv安装
 
