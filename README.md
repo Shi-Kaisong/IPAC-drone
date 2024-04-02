@@ -100,6 +100,20 @@
   mavlink stream -d /dev/ttyACM0 -s HIGHRES_IMU -r 200
    ```
 
+### （六）定位数据源更改
++ EKF2_AID_MASK
+  + 1 ：使用GPS定位
+  + 24：使用VINS视觉定位
++ EKF2_HGT_REF
+  + 高度估计主要数据来源，默认为气压计，可设置为视觉
++ EKF2_EV_POS_X, EKF2_EV_POS_Y, EKF2_EV_POS_Z
+  + 设置视觉定位来源与无人机中心位置的偏移量
+
+### （七）上位机通信接口设置
++ 使能接口
+  + MAV_1_CONFIG：将该接口映射到飞控的某一个串口后重启飞控
+  + MAV_1_MODE：Onboard
+  + SER_TEL1_BAUD：115200（上下位机串口通信波特率，根据自己要求设置）
 
 ## 五、机载电脑环境部署
 
