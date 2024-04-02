@@ -316,8 +316,9 @@ catkin_make
 
 当主从机处于同一局域网内时，可通过以下方式配置ROS主从机，进行主从机通信。
 
-+ 注意：以下内容中涉及到远程桌面的，统一使用ROS主从机实现
-
++ 注意：
+  + 以下内容中涉及到远程桌面的，统一使用ROS主从机实现
+  + 建议将主从机的ip都设置为静态ip，避免动态分配ip地址时产生变化
 + 主机
 
 `~/.bashrc`文件中添加以下内容：
@@ -356,7 +357,7 @@ export ROS_IP=主机IP
 
 ### （一）clone仓库源码
 
-clone仓库
++ clone仓库
 
 ```
 git clone https://github.com/Shi-Kaisong/IPAC-drone.git
@@ -443,5 +444,5 @@ cd VINS-Fusion-gpu/config/config
 * 建图模块验证
   * `sh shfiles/rspx4.sh`
   * `roslaunch ego_planner single_run_in_exp.launch`
-  * 进入从机桌面 `rviz -d ~/VINS-Fusion-gpu/config/vins_rviz_config.rviz`
+  * 进入从机桌面 `rviz -d ~/catkin_ws/src/planner/plan_manage/launch/default.rviz`
 
