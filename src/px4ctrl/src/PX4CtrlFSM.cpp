@@ -215,6 +215,7 @@ void PX4CtrlFSM::process()
 			ROS_ERROR("[px4ctrl] Reject AUTO_LAND, which must be triggered in AUTO_HOVER. \
 					Stop sending control commands for longer than %fs to let px4ctrl return to AUTO_HOVER first.",
 					  param.msg_timeout.cmd);
+			robocup();
 		}
 
 		break;
@@ -652,3 +653,4 @@ void PX4CtrlFSM::reboot_FCU()
 	// if (param.print_dbg)
 	// 	printf("reboot result=%d(uint8_t), success=%d(uint8_t)\n", reboot_srv.response.result, reboot_srv.response.success);
 }
+

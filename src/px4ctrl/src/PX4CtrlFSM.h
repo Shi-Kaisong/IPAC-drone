@@ -3,7 +3,7 @@
 
 #include <ros/ros.h>
 #include <ros/assert.h>
-
+#include "robocup.h"
 #include <geometry_msgs/PoseStamped.h>
 #include <nav_msgs/Odometry.h>
 #include <mavros_msgs/SetMode.h>
@@ -44,9 +44,11 @@ public:
 	ros::Publisher traj_start_trigger_pub;
 	ros::Publisher ctrl_FCU_pub;
 	ros::Publisher debug_pub; //debug
+	ros::Publisher position_pub; // 发布目标点坐标
 	ros::ServiceClient set_FCU_mode_srv;
 	ros::ServiceClient arming_client_srv;
 	ros::ServiceClient reboot_FCU_srv;
+
 
 	quadrotor_msgs::Px4ctrlDebug debug_msg; //debug
 
