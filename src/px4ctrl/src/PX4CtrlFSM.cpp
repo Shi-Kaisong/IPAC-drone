@@ -163,12 +163,15 @@ void PX4CtrlFSM::process()
 				ROS_INFO("\033[32m[px4ctrl] AUTO_HOVER(L2) --> CMD_CTRL(L3)\033[32m");
 			}
 		}
-		else if (takeoff_land_data.triggered && takeoff_land_data.takeoff_land_cmd == quadrotor_msgs::TakeoffLand::LAND)
+		else if ((takeoff_land_data.triggered && takeoff_land_data.takeoff_land_cmd == quadrotor_msgs::TakeoffLand::LAND) || (drone.task_state == 9))
 		{
 
 			state = AUTO_LAND;
 			set_start_pose_for_takeoff_land(odom_data);
-
+			if (drone.task_state == 9)
+			{
+				ROS_INFO("[robocup] enterned hover, start to land")
+			}
 			ROS_INFO("\033[32m[px4ctrl] AUTO_HOVER(L2) --> AUTO_LAND\033[32m");
 		}
 		else
@@ -215,7 +218,15 @@ void PX4CtrlFSM::process()
 			ROS_ERROR("[px4ctrl] Reject AUTO_LAND, which must be triggered in AUTO_HOVER. \
 					Stop sending control commands for longer than %fs to let px4ctrl return to AUTO_HOVER first.",
 					  param.msg_timeout.cmd);
-			robocup();
+			drone.odom_data = fsm.odom_data.msg;
+			drone.robocup();
+			if (drone.task_state == 9)
+			{
+				state = AUTO_HOVER;
+				
+				ROS_INFO("[px4ctrl] From CMD_CTRL(L3) to AUTO_TAKEOFF(L2)!");
+			}
+
 		}
 
 		break;

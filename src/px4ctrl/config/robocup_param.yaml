@@ -1,0 +1,86 @@
+# 定义关键点位姿
+key_point:
+  Start_point: # 起点
+    pose:
+      position:
+        x: 0
+        y: 0
+        z: 0
+      orientation:
+        x: 0
+        y: 0
+        z: 0
+        w: 0
+  Window_point: # 窗户坐标
+    pose:  
+      position:
+        x: 0
+        y: 0
+        z: 0
+      orientation:
+        x: 0
+        y: 0
+        z: 0
+        w: 0
+  Land_point:  # 终点坐标
+    pose:  
+      position:
+        x: 0
+        y: 0
+        z: 0
+      orientation:
+        x: 0
+        y: 0
+        z: 0
+        w: 0
+  Hover_point: # 悬停坐标
+    pose:  
+      position:
+        x: 0
+        y: 0
+        z: 0
+      orientation:
+        x: 0
+        y: 0
+        z: 0
+        w: 0
+  key1:        # 巡航路径关键点1
+    pose:  
+      position:
+        x: 0
+        y: 0
+        z: 0
+      orientation:
+        x: 0
+        y: 0
+        z: 0
+        w: 0
+  key2:       # 巡航路径关键点2
+    pose:  
+      position:
+        x: 0
+        y: 0
+        z: 0
+      orientation:
+        x: 0
+        y: 0
+        z: 0
+        w: 0
+  key3:       # 巡航路径关键点3
+    pose:  
+      position:
+        x: 0
+        y: 0
+        z: 0
+      orientation:
+        x: 0
+        y: 0
+        z: 0
+        w: 0
+Steer_angle:
+  group: 2
+  angle_1: 0
+  angle_2: 0
+  angle_3: 0
+  angle_4: 0
+  

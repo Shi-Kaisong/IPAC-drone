@@ -22,6 +22,16 @@ int main(int argc, char *argv[])
     // Controller controller(param);
     LinearControl controller(param);
     PX4CtrlFSM fsm(param, controller);
+    
+    // robocup start
+    
+    extern Drone drone;
+
+    drone.config_from_ros_handle(nh);
+    ros::Subscriber yolo_sub = nh.subscribe<robocup_yolo::yolo>("robocup_yolo",
+                                        10,
+                                        boost::bind(&State_Data_t::feed, &drone.yolo_data, _1));
+    // robocup end
 
     ros::Subscriber state_sub =
         nh.subscribe<mavros_msgs::State>("/mavros/state",
@@ -64,7 +74,7 @@ int main(int argc, char *argv[])
 
     ros::Subscriber bat_sub =
         nh.subscribe<sensor_msgs::BatteryState>("/mavros/battery",
-                                                100,
+             Subscriber RC_in_sub; // RC_in                                100,
                                                 boost::bind(&Battery_Data_t::feed, &fsm.bat_data, _1),
                                                 ros::VoidConstPtr(),
                                                 ros::TransportHints().tcpNoDelay());
@@ -80,7 +90,15 @@ int main(int argc, char *argv[])
     fsm.traj_start_trigger_pub = nh.advertise<geometry_msgs::PoseStamped>("/traj_start_trigger", 10);
 
     fsm.debug_pub = nh.advertise<quadrotor_msgs::Px4ctrlDebug>("/debugPx4ctrl", 10); // debug
-    fsm.position_pub = nh.advertise<geometry_msgs::PoseStamped>("/move_base_simple/goal", 10);
+    // robocup start
+    // 目标点坐标发布话题
+    drone.position_pub = nh.advertise<geometry_msgs::PoseStamped>("/move_base_simple/goal", 10);
+    // 舵机控制话题
+    drone.RC_out_pub = nh.advertise<mavros_msgs::RCOut>("/mavros/rc/out", 10);
+    // 混控器控制舵机
+    drone.Mount_control_pub = nh.advertise<mavros_msgs::MountControl>("/mavros/mount_control/command",10);
+    drone.actuator_pub=nh.advertise<mavros_msgs::ActuatorControl>("/iris_0/mavros/actuator_control", 10);
+    // end
     fsm.set_FCU_mode_srv = nh.serviceClient<mavros_msgs::SetMode>("/mavros/set_mode");
     fsm.arming_client_srv = nh.serviceClient<mavros_msgs::CommandBool>("/mavros/cmd/arming");
     fsm.reboot_FCU_srv = nh.serviceClient<mavros_msgs::CommandLong>("/mavros/cmd/command");

@@ -39,12 +39,14 @@ public:
 	Battery_Data_t bat_data;
 	Takeoff_Land_Data_t takeoff_land_data;
 
+
 	LinearControl &controller;
 
 	ros::Publisher traj_start_trigger_pub;
 	ros::Publisher ctrl_FCU_pub;
 	ros::Publisher debug_pub; //debug
-	ros::Publisher position_pub; // 发布目标点坐标
+
+
 	ros::ServiceClient set_FCU_mode_srv;
 	ros::ServiceClient arming_client_srv;
 	ros::ServiceClient reboot_FCU_srv;

@@ -157,6 +157,7 @@ void Odom_Data_t::feed(nav_msgs::OdometryConstPtr pMsg)
         last_clear_count_time = now;
     }
     one_min_count ++;
+    
 }
 
 Imu_Data_t::Imu_Data_t()
