@@ -42,7 +42,7 @@ void Drone::robocup(void )
             // 起飞成功后进入悬停模式
             else
             {
-                ROS_INFO("not arrived hover position!");
+                ROS_INFO("[robocup] not arrived hover position!");
 
                 break;
             }
@@ -62,7 +62,7 @@ void Drone::robocup(void )
             }
             else
             {
-                ROS_INFO("hovering! please wait...");
+                ROS_INFO("[robocup] hovering! please wait...");
                 break;
             }
             
@@ -186,14 +186,14 @@ void Drone::robocup(void )
             if (Is_arrive(key_point.Window_point, odom_data))
             {
                 task_state = CORRIDOR;
-                ROS_INFO("arrvied window!")
+                ROS_INFO("[robocup] arrvied window!")
                 // 进入窗户，到达窗户后，进入穿越走廊模式
                 ROS_INFO("[robocup] From WINDOW to CORRIDOR!");
                 
             }
             else
             {
-                ROS_INFO("entering window!");
+                ROS_INFO("[robocup] entering window!");
                 
             }
             
@@ -209,13 +209,13 @@ void Drone::robocup(void )
             if (Is_arrive(key_point.Land_point, odom_data))
             {
                 task_state = LAND;
-                ROS_INFO("have crossed corridor!")
+                ROS_INFO("[robocup] have crossed corridor!")
                 ROS_INFO("[robocup] From CORRIDOR to LAND!");
                 
             }
             else
             {
-                ROS_INFO("crossing corridor!");
+                ROS_INFO("[robocup] crossing corridor!");
                 
             }
             
@@ -230,12 +230,12 @@ void Drone::robocup(void )
             {
                 // 识别到降落地标后进入降落模式
                 
-                ROS_INFO("start to land" );
+                ROS_INFO("[robocup] start to land" );
                 task_state = AUTO_land;
             }
             else
             {
-                ROS_INFO("")
+                ROS_INFO("[robocup] yolo turning!");
             }
             
             break;
@@ -246,7 +246,7 @@ void Drone::robocup(void )
         
     }
     // 发布期望坐标到ego
-    publish_setpoint_position(setpoint_position);
+    publish_setpoint_position(setpoint_position, now_time);
     
     ros::Time last_time = now_time;
 }
@@ -310,9 +310,6 @@ void Drone::config_from_ros_handle(const ros::NodeHandle &nh)
 Drone::Drone()
 {
     task_state = INIT;
-
-
-
 }
 
 
@@ -334,7 +331,7 @@ geometry_msgs::PoseStamped Drone::yolo_turn_position(geometry_msgs::PoseStamped 
     return current;
 }
 
-void publish_setpoint_position(geometry_msgs::PoseStamped &pos, ros::Time &stamp)
+void Drone::publish_setpoint_position(geometry_msgs::PoseStamped &pos, ros::Time &stamp)
 {
     geometry_msgs::PoseStamped msg;
     msg.header.stamp = stamp;
@@ -349,11 +346,11 @@ void publish_setpoint_position(geometry_msgs::PoseStamped &pos, ros::Time &stamp
     position_pub.publish(msg);
 }
 
-bool Drone::Is_arrive(geometry_msgs::PoseStamped key_point, nav_msgs::Odometry Odometry)
+bool Drone::Is_arrive(geometry_msgs::PoseStamped point, nav_msgs::Odometry Odometry)
 {
-    if (((Odometry.pose.pose.position.x < (key_point.pose.position.x + error)) || (Odometry.pose.pose.position.x > (key_point.pose.position.x - error)))
-        && ((Odometry.pose.pose.position.y < (key_point.pose.position.y + error)) || (Odometry.pose.pose.position.y > (key_point.pose.position.y - error)))
-        && ((Odometry.pose.pose.position.z < (key_point.pose.position.z + error)) || (Odometry.pose.pose.position.z > (key_point.pose.position.z - error))))
+    if (((Odometry.pose.pose.position.x < (point.pose.position.x + error)) || (Odometry.pose.pose.position.x > (point.pose.position.x - error)))
+        && ((Odometry.pose.pose.position.y < (point.pose.position.y + error)) || (Odometry.pose.pose.position.y > (point.pose.position.y - error)))
+        && ((Odometry.pose.pose.position.z < (point.pose.position.z + error)) || (Odometry.pose.pose.position.z > (point.pose.position.z - error))))
 
     {
         return true;
@@ -398,7 +395,7 @@ void Drone::yolo_data_deal(robocup_yolo::yolo pmsgs)
     }
 }
 
-void control_steer(int throw_nums)
+void Drone::control_steer(int throw_nums)
 {
     control_Actual.group_mix = 2;
     if (throw_nums == 0)
