@@ -39,7 +39,7 @@
 + realsence D435i
 + usb摄像头
 ### 软件介绍
-+ 本项目ROS主从机均采用ubuntu 18.04系统，采用ros noetic版本
++ 本项目ROS主从机均采用ubuntu 20.04系统，采用ros noetic版本
 + 飞控固件采用PX4：1.13.2版本
 
 ## 三、无人机结构
